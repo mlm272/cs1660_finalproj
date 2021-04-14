@@ -1,0 +1,102 @@
+version: "3.3"
+
+services:
+    toolbox:
+        image: mlm272/cs1660_finalproj
+        environment:
+            - DISPLAY=host.docker.internal:0
+            
+  #  rstudio:
+  #     image: rocker/rstudio
+  #      container_name: "rstudio"
+  #      ports:
+  #          - 8787:8787
+   #     environment:
+   #         - DISABLE_AUTH=true
+    
+    spyder:
+        environment:
+            - DISPLAY
+        image: compdatasci/spyder-desktop
+        ports:
+            - 6080:6080
+        container_name: "spyder"
+        
+    git:
+        image: gitea/gitea:1.12.4
+        volumes:
+            - ./data:/data
+        ports:
+            - 3000:3000
+            - 22:22
+        depends_on:
+            - db
+        restart: always
+        
+    db:
+        image: mariadb:10
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=git
+            - MYSQL_DATABASE=gitea
+            - MYSQL_USER=gitea
+            - MYSQL_PASSWORD=git
+        volumes:
+            - ./db/:/var/lib/mysql
+     
+   # jupyter:
+    #    image: jupyter/base-notebook
+   #     container_name: "jupyter-notebook"
+   #     ports:
+   #         - 8888:8888
+            
+    orange:
+        image: acopar/orange-docker
+        ports:
+            - 6901:6901
+
+    visual:
+        image: linuxserver/code-server
+        container_name: "vscode"
+        environment:
+            - DISPLAY
+        ports:
+            - 8443:8443
+
+    hadoop:
+        image: harisekhon/hadoop
+        ports:
+            - 8042:8042
+            - 8088:8088
+            - 19888:19888
+            - 50070:50070
+            - 50075:50075
+        container_name: hadoop
+ 
+    spark:
+        image: jupyter/pyspark-notebook
+        container_name: "pyspark"
+        ports:
+            - 8887:8888
+        environment:
+            - JUPYTER_TOKEN=easy
+        
+   # tableau:
+   #     container_name: "tableau"
+   #     image: pvtmert/tableau
+   #     ports:
+   #         - 8316:8316
+
+    tensor:
+        image: ankur310794/tensorflow:latest-nlp
+        ports:
+            - 8888:8888
+        container_name: "tensorflow"
+        environment:
+            - JUPYTER_TOKEN=easy
+
+    markdown:
+        image: v4tech/markdown-editor
+        ports:
+            - 12345:80
+        container_name: "markdown"

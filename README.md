@@ -17,4 +17,4 @@ my docker repository w/ my given image:
 https://hub.docker.com/repository/docker/mlm272/cs1660_finalproj
 
 Video:
-TO BE ADDED
+TO BE ADDED (granted extension until the morning - will email it to Dr. Farag)
